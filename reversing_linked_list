@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct slist
+{
+    int data;
+    struct slist *next;
+};
+typedef struct slist node;
+node *create(node *first)
+{
+    node *new,*prev;
+    int x;
+    printf("enter data value(enter -1 to stop)");
+    scanf("%d",&x);
+    while(x!=-1)
+    {
+        new=(node *)malloc(sizeof(node));
+        new->data=x;
+        new->next=NULL;
+        if(first==NULL)
+        {
+            first=new;
+            prev=new;
+        }
+        else
+        {
+            prev->next=new;
+            prev=new;
+        }
+        printf("enter data value(enter -1 to stop)");
+        scanf("%d",&x);
+        
+    }
+    return first;
+}
+void display(node *first)
+{
+    node *temp=first;
+    if(temp==NULL)
+    {
+        printf("no list to print");
+    }
+    else
+    {
+        while(temp!=NULL)
+        {
+            printf("|%d|\n",temp->data);
+            temp=temp->next;
+        }
+        printf("NULL");
+    }
+}
+node *reverse(node *first)
+{
+    node *present=first,*prev=NULL,*save;
+    while(present!=NULL)
+    {
+        save=present->next;
+        present->next=prev;
+        prev=present;
+        present=save;
+    }
+    return prev;
+}
+int main()
+{
+    node *head=NULL;
+    head=create(head);
+    head=reverse(head);
+    display(head);
+    
+    
+}
+
+OUTPUT:
+enter data value(enter -1 to stop)10
+enter data value(enter -1 to stop)20
+enter data value(enter -1 to stop)30
+enter data value(enter -1 to stop)49
+enter data value(enter -1 to stop)-1
+|49|
+|30|
+|20|
+|10|
+NULL
