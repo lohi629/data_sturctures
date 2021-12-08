@@ -33,6 +33,43 @@ node *create(node *first)
     }
     return first;
 }
+OUTPUT:
+
+#include<stdio.h>
+#include<stdlib.h>
+struct slist
+{
+    int data;
+    struct slist *next;
+};
+typedef struct slist node;
+node *create(node *first)
+{
+    node *new,*prev;
+    int x;
+    printf("enter data value(enter -1 to stop)");
+    scanf("%d",&x);
+    while(x!=-1)
+    {
+        new=(node *)malloc(sizeof(node));
+        new->data=x;
+        new->next=NULL;
+        if(first==NULL)
+        {
+            first=new;
+            prev=new;
+        }
+        else
+        {
+            prev->next=new;
+            prev=new;
+        }
+        printf("enter data value(enter -1 to stop)");
+        scanf("%d",&x);
+        
+    }
+    return first;
+}
 void display(node *first)
 {
     node *temp=first;
@@ -257,3 +294,146 @@ int main()
         
     }
 }
+OUTPUT:
+
+enter data value(enter -1 to stop)10
+enter data value(enter -1 to stop)15
+enter data value(enter -1 to stop)30
+enter data value(enter -1 to stop)44
+enter data value(enter -1 to stop)50
+enter data value(enter -1 to stop)-1
+1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:1
+|10|
+|15|
+|30|
+|44|
+|50|
+NULL1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:2
+no.of nodes are5
+1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:3
+enter ele to be searched44
+ele 44 is found1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:4
+enter ele to be inserted40
+|40|
+|10|
+|15|
+|30|
+|44|
+|50|
+NULL1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:4 5
+enter ele to be inserted55
+|40|
+|10|
+|15|
+|30|
+|44|
+|50|
+|55|
+NULL1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:7
+enter ele to be deleted50
+|40|
+|10|
+|15|
+|30|
+|44|
+|55|
+NULL1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:6
+enter ele to be inserted33
+enter pos 3
+|40|
+|10|
+|33|
+|15|
+|30|
+|44|
+|55|
+NULL1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:8
+|10|
+|15|
+|30|
+|33|
+|40|
+|44|
+|55|
+NULL1:display
+ 2:count
+ 3:search
+ 4:insert_at_begin
+ 5:insert_at_end
+ 6:insert_at_pos
+7:deletion
+ 8:sort
+ 9:exit
+enter choice:9
