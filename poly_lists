@@ -1,0 +1,160 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct polynomial
+{
+        int coeff,exp;
+        struct polynomial *next;
+};
+typedef struct polynomial node;
+node *addterm(node *,node *);
+node *create()
+{
+        node *first=NULL,*new;
+        char c;
+        do
+        {
+                new=(node *)malloc(sizeof(node));
+                printf("enter coefficient and exponent of term");
+                scanf("%d%d",&new->coeff,&new->exp);
+                new->next=NULL;
+                first=addterm(first,new);
+                printf("enter another term(enter n to stop)");
+                scanf(" %c",&c);
+        }while(c!='n');
+        return first;
+}
+node *addterm(node *first,node *new)
+{
+        node *temp,*temp1;
+        if(first==NULL)
+        {
+                first=new;
+        }
+        else if(first->exp<new->exp)
+        {
+                new->next =first;
+                first=new;
+        }
+        else
+        {
+                temp =first->next;
+                temp1 =first;
+                while(temp!=NULL && temp->exp>new->exp)
+                {
+                        temp1 =temp;
+                        temp =temp->next;
+                }
+                if(temp==NULL)
+                {
+                        temp1->next =new;
+                }
+                else if(temp->exp==new->exp)
+                {
+                        temp->coeff =temp->coeff+new->coeff;
+                }
+                else
+                {
+                        temp1->next =new;
+                        new->next=temp;
+                }
+        }
+        return first;
+}
+void display(node *first)
+{
+        node *temp=first;
+        if(first==NULL)
+        {
+                printf("no list to print");
+        }
+        else
+        {
+                while(temp!=NULL)
+                {
+                        printf("%dx^%d+",temp->coeff,temp->exp);
+                        temp=temp->next;
+                }
+                printf("NULL");
+        }
+}
+node *add(node *p1,node *p2)
+{
+        node *p3=NULL,*new;
+        while(p1!=NULL && p2!=NULL)
+        {
+                new=(node *)malloc(sizeof(node));
+                new->next=NULL;
+                if(p1->exp>p2->exp)
+                {
+                        new->coeff=p1->coeff;
+                        new->exp=p1->exp;
+                        p3=addterm(p3,new);
+                        p1=p1->next;
+                }
+                else if(p2->exp>p1->exp)
+                {
+                        new->coeff=p2->coeff;
+                        new->exp=p2->exp;
+                        p3=addterm(p3,new);
+                        p2=p2->next;
+                }
+                else
+                {
+                        new->coeff=p1->coeff+p2->coeff;
+                        new->exp=p1->exp;
+                        p3=addterm(p3,new);
+                        p1=p1->next;
+                        p2=p2->next;
+                }
+        }
+        if(p1==NULL)
+        {
+                while(p2!=NULL)
+                {
+                        new=(node *)malloc(sizeof(node));
+                        new->coeff=p2->coeff;
+                        new->exp=p2->exp;
+                        p3=addterm(p3,new);
+                        p2=p2->next;
+                }
+        }
+        if(p2==NULL)
+        {
+                while(p1!=NULL)
+                {
+                        new=(node *)malloc(sizeof(node));
+                        new->coeff=p1->coeff;
+                        new->exp=p1->exp;
+                        p3=addterm(p3,new);
+                        p1=p1->next;
+                }
+        }
+        return p3;
+}
+
+int main()
+{
+        node *head=NULL,*p1,*p2,*p3;
+        p1=create();
+        p2=create();
+        p3=add(p1,p2);
+        display(p3);
+}
+output:
+
+enter coefficient and exponent of term3
+2
+enter another term(enter n to stop)r
+enter coefficient and exponent of term4
+3
+enter another term(enter n to stop)n
+enter coefficient and exponent of term2
+1
+enter another term(enter n to stop)t
+enter coefficient and exponent of term9
+1
+enter another term(enter n to stop)h
+enter coefficient and exponent of term8
+2
+enter another term(enter n to stop)n
+4x^3+11x^2+11x^1+NULL
