@@ -1,0 +1,140 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 50
+int max(int,int);
+struct polynomial
+{
+        int highpower;
+        int coeff[MAX];
+};
+typedef struct polynomial poly;
+poly *create()
+{
+        poly *p;
+        int i;
+        p=(poly *)malloc(sizeof(poly));
+        printf("enter high power");
+        scanf("%d",&p->highpower);
+        for(i=p->highpower;i>=0;i--)
+        {
+                printf("enter coefficient of %d ele",i);
+                scanf("%d",&p->coeff[i]);
+        }
+        return p;
+}
+poly *add(poly *p1,poly *p2)
+{
+        poly *p3;
+        int i;
+        p3=(poly *)malloc(sizeof(poly));
+        p3->highpower=max(p1->highpower,p2->highpower);
+        for(i=p3->highpower;i>=0;i--)
+        {
+                p3->coeff[i]=p1->coeff[i]+p2->coeff[i];
+        }
+        }
+poly *sub(poly *p1,poly *p2)
+{
+        poly *p3;
+        int i;
+        p3=(poly *)malloc(sizeof(poly));
+        p3->highpower=max(p1->highpower,p2->highpower);
+        for(i=p3->highpower;i>=0;i--)
+        {
+                p3->coeff[i]=p1->coeff[i]-p2->coeff[i];
+        }
+        return p3;
+}
+poly *mul(poly *p1,poly *p2)
+{
+        poly *p3;
+        int i,j;
+        p3=(poly *)malloc(sizeof(poly));
+        p3->highpower=p1->highpower+p2->highpower;
+        for(i=p1->highpower;i>=0;i--)
+        {
+                for(j=p2->highpower;j>=0;j--)
+                {
+                        p3->coeff[i+j]=p3->coeff[i+j]+(p1->coeff[i]*p2->coeff[j]);
+                }
+        }
+        return p3;
+}
+void display(poly *p)
+{
+        int i;
+        for(i=p->highpower;i>=0;i--)
+        {
+                printf("%dx^%d+",p->coeff[i],i);
+        }
+}
+int max(int a,int b)
+{
+        return ((a>b)?a:b);
+}
+int main()
+{
+        poly *p1,*p2,*p3;
+        int ch;
+        printf("enter first polynomial\n");
+        p1=create();
+        printf("enter second polynomial\n");
+        p2=create();
+        while(1)
+        {
+                printf(" 1:add\n 2:sub\n 3:mul\n  4:exit\n");
+                printf("enter choice");
+                scanf("%d",&ch);
+                switch(ch)
+                {
+                        case 1:p3=add(p1,p2);
+                               display(p3);
+                               break;
+                               case 2:p3=sub(p1,p2);
+                               display(p3);
+                               break;
+                        case 3:p3=mul(p1,p2);
+                               display(p3);
+                               break;
+                        case 4:exit(0);
+                        default:printf("check choice");
+                }
+          }
+}              
+
+
+OUTPUT:
+
+enter first polynomial
+enter high power3
+enter coefficient of 3 ele3
+enter coefficient of 2 ele4
+enter coefficient of 1 ele2
+enter coefficient of 0 ele1
+enter second polynomial
+enter high power4
+enter coefficient of 4 ele8
+enter coefficient of 3 ele7
+enter coefficient of 2 ele2
+enter coefficient of 1 ele1
+enter coefficient of 0 ele2
+ 1:add
+ 2:sub
+ 3:mul
+  4:exit
+enter choice1
+8x^4+10x^3+6x^2+3x^1+3x^0+ 1:add
+ 2:sub
+ 3:mul
+  4:exit
+enter choice2
+-8x^4+-4x^3+2x^2+1x^1+-1x^0+ 1:add
+ 2:sub
+ 3:mul
+  4:exit
+enter choice3
+24x^7+53x^6+50x^5+33x^4+21x^3+12x^2+5x^1+2x^0+ 1:add
+ 2:sub
+ 3:mul
+  4:exit
+enter choice4
