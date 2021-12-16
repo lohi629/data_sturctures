@@ -1,0 +1,349 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct clist
+{
+        int data;
+        struct clist *next;
+};
+typedef struct clist node;
+node *create(node *first)
+{
+        node *new,*prev;
+        int x;
+        printf("enter data(enter -1 to stop)");
+        scanf("%d",&x);
+        while(x!=-1)
+        {
+                new=(node *)malloc(sizeof(node));
+                new->data=x;
+                new->next=NULL;
+                if(first==NULL)
+                {
+                        first=new;
+                        prev=new;
+                }
+                else
+                {
+                        prev->next=new;
+                        prev=new;
+                }
+                printf("enter x (enter -1 to stop)");
+                scanf("%d",&x);
+        }
+        prev->next=first;
+        return first;
+}
+void display(node *first)
+{
+        node *temp=first;
+        if(first==NULL)
+        {
+                printf("no list to print");
+        }
+        else
+        {
+                do
+                {
+                        printf("|%d|->",temp->data);
+                        temp=temp->next;
+}while(temp!=first);
+                printf("|%d|",temp->data);
+        }
+}
+int count(node *first)
+{
+        node *temp=first;
+        int c=0;
+        if(first==NULL)
+        {
+                return c;
+        }
+        else
+        {
+                do
+                {
+                        c++;
+                        temp=temp->next;
+                }while(temp!=first);
+        }
+        return c;
+}
+void search(node *first,int x)
+{
+        node *temp=first;
+        int flag=0;
+        if(first==NULL)
+        {
+                printf("no ele is there to search");
+        }
+        else
+        {
+                do
+                {
+                        if(temp->data==x)
+                        {
+                                flag=1;
+                                break;
+                        }
+                        else
+                        {
+                                temp=temp->next;
+                        }
+                }while(temp!=first);
+        }
+        if(flag==1)
+        {
+               printf("%d ele is found",x);
+        }
+        else
+        {
+                printf("%d ele is not found",x);
+        }
+}
+node *insert_begin(node *first,int x)
+{
+        node *new,*temp=first;
+        new=(node *)malloc(sizeof(node));
+        new->data=x;
+        new->next=NULL;
+        if(first==NULL)
+        {
+                first=new;
+                new->next=first;
+        }
+        else
+        {
+                do
+                {
+                 temp=temp->next;
+                }while(temp->next!=first);
+                new->next=first;
+                temp->next=new;
+                first=new;
+        }
+        return first;
+}
+node *insert_end(node *first,int x)
+{
+        node *new,*temp=first;
+        new=(node *)malloc(sizeof(node));
+        new->data=x;
+        new->next=NULL;
+        if(first==NULL)
+        {
+                first=new;
+        }
+        else
+        {
+                do
+                {
+                        temp=temp->next;
+                }while(temp->next!=first);
+                new->next=first;
+                temp->next=new;
+        }
+        return first;
+}
+node *insert_pos(node *first,int x,int pos)
+{
+        node *new,*temp=first;
+        int n,i;
+        n=count(first);
+        if(pos>1&&pos<n)
+        {
+                new=(node *)malloc(sizeof(node));
+                new->data=x;
+                new->next=NULL;
+                if(first==NULL)
+                {
+                        first=new;
+                        new->next=first;
+                }
+                else
+                {
+                        for(i=1;i<pos-1;i++)
+                        {
+                        temp=temp->next;
+                        }
+                        new->next=temp->next;
+                        temp->next=new;
+                }
+                return first;
+        }
+}
+node *del(node *first,int x)
+{
+        node *temp,*temp1;
+        temp=first;
+        int flag=0;
+        if(first==NULL)
+        {
+                printf("no ele to delete");
+        }
+        else if(first->data==x)
+        {
+                temp1=first;
+                temp=first;
+                while(temp->next!=first)
+                {
+                        temp=temp->next;
+                        }
+                first=first->next;
+                temp->next=first;
+                free(temp1);
+        }
+        else
+        {
+                temp1=first;
+                temp=first->next;
+                while(temp!=first)
+                {
+                        if(temp->data==x)
+                        {
+                                flag=1;
+                                break;
+                        }
+                        else
+                        {
+                                temp1=temp;
+                                temp=temp->next;
+                        }               }
+        }
+        if(flag==1)
+        {
+        temp1->next=temp->next;
+                free(temp);
+        }
+        else
+        {
+                printf("ele is not found");
+        }
+        return first;
+}
+void sort(node *first)
+{
+        node *temp1,*temp2;
+        int x;
+        for(temp1=first;temp1->next!=first;temp1=temp1->next)
+        {
+                for(temp2=temp1->next;temp2!=first;temp2=temp2->next)
+                {
+                        if(temp1->data>temp2->data)
+                        {
+                                x=temp1->data;
+                                temp1->data=temp2->data;
+                                temp2->data=x;
+                        }
+                        }
+        }
+}
+node *reverse(node *first)
+{
+        node *present=first,*prev=NULL,*save;
+        if(first==NULL)
+        {
+                printf("no list to reverse");
+        }
+        else
+        {
+                do
+                {
+                        save=present->next;
+                        present->next=prev;
+                        prev=present;
+                        present=save;
+                }while(present!=first);
+        }
+        first->next=prev;
+        first=prev;
+        return first;
+}
+int main()
+{
+        int n,x,pos,ch;
+        node *head=NULL;
+        head=create(head);
+        printf("1:display\n 2:count\n 3:search\n  4:insert_begin\n 5:insert_end\n 6:insert_pos\n");
+        printf("7:delete\n 8:sort\n 9:reverse\n 10:exit\n");
+        while(1)
+        {
+                printf("enter choice");
+                scanf("%d",&ch);
+                switch(ch)
+                {
+                        case 1:display(head);
+                               break;
+                        case 2:n=count(head);
+                               printf("no.of nodes are %d",n);
+                               break;
+                        case 3:printf("enter ele to be searched");
+                               scanf("%d",&x);
+                               search(head,x);
+                               break;
+                        case 4:printf("enter ele to be inserted");
+                               scanf("%d",&x);
+                               head=insert_begin(head,x);
+                               display(head);
+                               break;
+                        case 5:printf("enter ele to be inserted");
+                               scanf("%d",&x);
+                               head=insert_end(head,x);
+                               display(head);
+                               break;
+                        case 6:printf("enter ele to be inserted");
+                               scanf("%d",&x);
+                               printf("enter posistion");
+                               scanf("%d",&pos);
+                               head=insert_pos(head,x,pos);
+                               display(head);
+                               break;
+                        case 7:printf("enter ele to be deleted");
+                               scanf("%d",&x);
+                               head=del(head,x);
+                               display(head);
+                               break;
+                        case 8:sort(head);
+                         display(head);
+                               break;
+                        case 9:head=reverse(head);
+                               display(head);
+                               break;
+                        case 10:exit(0);
+                        default:printf("enter wrong choice");
+                }
+        }
+}
+output:
+
+
+enter data(enter -1 to stop)10                                                       128,24-31     41%
+enter x (enter -1 to stop)20                                                         129,32-39     41%
+enter x (enter -1 to stop)30                                                         130,14-21     42%
+enter x (enter -1 to stop)40                                                         131,17-24     42%
+enter x (enter -1 to stop)-1                                                         132,17-24     42%
+1:display --                                                                         133,3-10      43%
+ 2:countT --                                                                         134,13-27     43%
+ 3:search --                                                                         135,3-10      43%
+  4:insert_begin                                                                     136,6-13      44%
+ 5:insert_end                                                                        137,3-10      44%
+ 6:insert_pos                                                                        138,5-19      44%
+7:deleteT --                                                                         139,4-18      45%
+ 8:sortRT --                                                                         140,18-39     45%
+ 9:reverse--                                                                         141,25-39     45%
+ 10:exitT --                                                                         142,19-33     46%
+enter choice1                                                                        143,18-32     46%
+|10|->|20|->|30|->|40|->|10|enter choice2                                            144,3-10      46%
+no.of nodes are 4enter choice3                                                       145,15-22     47%
+enter ele to be searched20                                                           146,2         47%
+20 ele is foundenter choice4                                                         147,39        47%
+enter ele to be inserted9                                                            148,2         48%
+|9|->|10|->|20|->|30|->|40|->|9|enter choice5                                        149,24-31     48%
+enter ele to be inserted90                                                           150,10-17     48%
+|9|->|10|->|20|->|30|->|40|->|90|->|9|enter choice6                                  151,17-24     49%
+enter ele to be inserted98                                                           152,18-25     49%
+enter posistion2                                                                     153,3-10      49%
+|9|->|98|->|10|->|20|->|30|->|40|->|90|->|9|enter choice7                            154,25-39     50%
+enter ele to be deleted10                                                            155,15-29     50%
+|9|->|98|->|20|->|30|->|40|->|90|->|9|enter choice8                                  156,18-32     50%
+|9|->|20|->|30|->|40|->|90|->|98|->|9|enter choice9                                  157,18-32     51%
+|98|->|90|->|40|->|30|->|20|->|9|->|98|enter choice10
