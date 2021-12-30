@@ -1,0 +1,240 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct hashtable
+{
+        int data;
+        struct hashtable *next;
+};
+typedef struct hashtable node;
+int hash(int x)
+{
+        return x%10;
+}
+void insert(node *t[10],int x)
+{
+        int i=hash(x);
+        node *p;
+        p=(node *)malloc(sizeof(node));
+        p->data=x;
+        p->next=NULL;
+        if(t[i]->next==NULL)
+        {
+                t[i]->next=p;
+        }
+        else
+        {
+                p->next=t[i]->next;
+                t[i]->next=p;
+        }
+}
+void display(node *t[10])
+{
+        node *temp;
+        int i;
+        for(i=0;i<10;i++)
+        {
+                temp=t[i]->next;
+                printf("\n|%d|-",i);
+                while(temp!=NULL)
+                {
+                        printf("%d->",temp->data);
+                        temp=temp->next;
+                }
+                printf("NULL\n");
+        }
+}
+void search(node *t[10],int x)
+{
+        int i=hash(x);
+         int flag=0;
+        node *temp=t[i]->next;
+        while(temp!=NULL)
+        {
+                if(temp->data==x)
+                {
+                        flag=1;
+                        break;
+                }
+                else
+                {
+                        temp=temp->next;
+                }
+        }
+        if(flag==1)
+        {
+                printf("ele %d is found",x);
+        }
+        else
+        {
+                printf("ele %d is not found",x);
+        }
+}
+void delete(node *t[10],int x)
+{
+        int flag=0,i;
+        i=hash(x);
+        node *temp=t[i]->next,*temp1=t[i];
+        while(temp!=NULL)
+        {
+                if(temp->data==x)
+                {
+                        flag=1;
+                        break;
+                }
+                else
+                {
+                        temp1=temp;
+                        temp=temp->next;
+                }
+        }
+        if(flag==1)
+        {
+                temp1->next=temp->next;
+                free(temp);
+        }
+        else
+        {
+        printf("ele %d is not found",x);
+        }
+}
+int main()
+{
+        node *t[10];
+        int i,ch,x;
+        for(i=0;i<10;i++)
+        {
+                t[i]=(node *)malloc(sizeof(node));
+                t[i]->next=NULL;
+        }
+        while(1)
+        {
+                printf("1:insert\n 2:display\n 3:search\n 4:delete\n  5:exit\n");
+                printf("enter choice");
+                scanf("%d",&ch);
+                switch(ch)
+                {
+                        case 1:printf("enter ele to be inserted");
+                               scanf("%d",&x);
+                               insert(t,x);
+                               break;
+                        case 2:printf("ele in hash table are:\n");
+                        display(t);
+                               break;
+                        case 3:printf("enter ele to be searched");
+                               scanf("%d",&x);
+                               search(t,x);
+                               break;
+                        case 4:printf("enter ele to be deleted");
+                               scanf("%d",&x);
+                               delete(t,x);
+                               break;
+                        case 5:exit(0);
+                               break;
+                        default:printf("enter wrong  choice:");
+                }
+        }
+}
+output:
+
+1:insertT --                                                                         97,17-31      80%
+ 2:display--                                                                         98,3-10       81%
+ 3:search --                                                                         99,2          82%
+ 4:delete --                                                                         100,11        83%
+  5:exitT --                                                                         101,2         84%
+enter choice1                                                                        102,14-21     84%
+enter ele to be inserted58                                                           103,13-20     85%
+1:insertT --                                                                         104,19-26     86%
+ 2:display--                                                                         105,3-10      87%
+ 3:search --                                                                         106,17-31     88%
+ 4:delete --                                                                         107,17-31     89%
+  5:exitT --                                                                         108,3-10      90%
+enter choice1                                                                        109,10-17     91%
+enter ele to be inserted48                                                           110,3-10      92%
+1:insertT --                                                                         111,17-31     92%
+ 2:display--                                                                         112,17-31     93%
+ 3:search --                                                                         113,17-31     94%
+ 4:delete --                                                                         114,13-27     95%
+  5:exitT --                                                                         115,4-18      96%
+enter choice1                                                                        116,9-30      97%
+enter ele to be inserted23                                                           117,9-30      98%
+1:insertT --                                                                         118,9-30      99%
+ 2:display--                                                                         119,9-30      Bot
+ 3:search
+ 4:delete
+  5:exit
+enter choice1
+enter ele to be inserted45
+1:insert
+ 2:display
+ 3:search
+ 4:delete
+  5:exit
+enter choice2
+ele in hash table are:
+
+|0|-NULL
+
+|1|-NULL
+
+|2|-NULL
+
+|3|-23->NULL
+
+|4|-NULL
+
+|5|-45->NULL
+
+|6|-NULL
+
+|7|-NULL
+
+|8|-48->58->NULL
+
+|9|-NULL
+1:insert
+ 2:display
+ 3:search
+ 4:delete
+  5:exit
+enter choice3
+enter ele to be searched45
+ele 45 is found1:insert
+ 2:display
+ 3:search
+ 4:delete
+  5:exit
+enter choice4
+enter ele to be deleted45
+1:insert
+ 2:display
+ 3:search
+ 4:delete
+  5:exit
+enter choice2
+ele in hash table are:
+
+|0|-NULL
+
+|1|-NULL
+
+|2|-NULL
+
+|3|-23->NULL
+
+|4|-NULL
+
+|5|-NULL
+
+|6|-NULL
+
+|7|-NULL
+
+|8|-48->58->NULL
+
+|9|-NULL
+1:insert
+ 2:display
+ 3:search
+ 4:delete
+  5:exit
+enter choice5
