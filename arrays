@@ -1,0 +1,163 @@
+#include<stdio.h>
+#include<stdlib.h>
+int a[10],n;
+void insert()
+{
+        int i,pos,ele;
+        printf("enter posistion of an ele to be inserted");
+       scanf("%d",&pos);
+        printf("enter ele to be inserted");
+        scanf("%d",&ele);
+        for(i=n-1;i>=pos-1;i--)
+        {
+                a[i+1]=a[i];
+        }
+        a[pos-1]=ele;
+        n=n+1;
+}
+void delete()
+{
+        int pos,i;
+        printf("enter pos of an ele to be deleted");
+        scanf("%d",&pos);
+        for(i=pos-1;i<n;i++)
+        {
+        a[i]=a[i+1];
+        }
+        n=n-1;
+}
+void sorting()
+{
+        int t,i,j;
+        for(i=0;i<n;i++)
+        {
+                for(j=i+1;j<n;j++)
+                {
+                        if(a[i]>a[j])
+                        {
+                                t=a[i];
+                                a[i]=a[j];
+                                a[j]=t;
+                        }
+                }
+        }
+}
+void search()
+{
+        int x,i,flag=0;
+        printf("enter ele to be searched");
+         scanf("%d",&x);
+        for(i=0;i<n;i++)
+        {
+                if(a[i]==x)
+                {
+                        flag=1;
+                        break;
+                }
+        }
+        if(flag==1)
+        {
+                printf("%d ele is found",x);
+        }
+        else
+        {
+                printf("%d ele is not found",x);
+        }
+}
+void reverse()
+{
+        int i;
+        for(i=n-1;i>=0;i--)
+        {
+                printf("%d\n",a[i]);
+                }
+}
+void display()
+{
+        int i;
+        for(i=0;i<n;i++)
+        {
+                printf("%d\n",a[i]);
+        }
+}
+void main()
+{
+        int i,ch,x;
+        printf("enter size of an array");
+        scanf("%d",&n);
+        printf("enter array ele");
+        for(i=0;i<n;i++)
+        {
+                scanf("%d",&a[i]);
+        }
+        printf("1:insert\n 2:delete\n 3:sort\n 4:search\n 5:reverse\n  6:exit\n");
+        while(1)
+        {
+                printf("enter choice");
+                 scanf("%d",&ch);
+                switch(ch)
+                {
+                        case 1:insert();
+                               display();
+                               break;
+                        case 2:delete();
+                               display();
+                               break;
+                        case 3:sorting();
+                               display();
+                               break;
+                        case 4:search();
+                               break;
+                        case 5:reverse();
+                               break;
+                        case 6:exit(0);
+                               break;
+                }
+        }
+}
+
+output:
+
+enter size of an array5
+enter array ele2
+7
+1
+5
+3
+1:insert
+ 2:delete
+ 3:sort
+ 4:search
+ 5:reverse
+  6:exit
+enter choice1
+enter posistion of an ele to be inserted4
+enter ele to be inserted90
+2
+7
+1
+90
+5
+3
+enter choice2
+enter pos of an ele to be deleted3
+2
+7
+90
+5
+3
+enter choice3
+2
+3
+5
+7
+90
+enter choice4
+enter ele to be searched90
+90 ele is foundenter choice5
+90
+7
+5
+3
+2
+enter choice6
