@@ -1,0 +1,149 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct stack
+{
+        int data;
+        struct stack *next;
+};
+typedef struct stack node;
+node *top=NULL;
+void push(int x)
+{
+        node *new;
+        new=(node *)malloc(sizeof(node));
+        new->data=x;
+        new->next=NULL;
+        if(top==NULL)
+        {
+                top=new;
+        }
+        else
+        {
+                new->next=top;
+                top=new;
+        }
+}
+int pop()
+{
+        int x;
+        node *temp=top;
+        if(top==NULL)
+        {
+                return -1;
+        }
+        else
+        {
+           x=top->data;
+           top=top->next;
+           free(temp);
+           return x;
+        }
+}
+void display()
+{
+ node *temp=top;
+        if(top==NULL)
+        {
+                printf("underflow");
+        }
+        else
+        {
+                while(temp!=NULL)
+                {
+                        printf("|%d|->",temp->data);
+                        temp=temp->next;
+                }
+                printf("NULL");
+        }
+}
+int peek()
+{
+        if(top==NULL)
+        {
+                return -1;
+        }
+        else
+        {
+           return top->data;
+        }
+}
+void main()
+{
+        int x,ch;
+        while(1)
+        {
+                printf("enter choice");
+                scanf("%d",&ch);
+                printf("1:push\n 2:pop\n 3:peek\n 4:display\n 5:exit\n");
+                switch(ch)
+                {
+                        case 1:printf("enter x value");
+                               scanf("%d",&x);
+                               push(x);
+                               break;
+                        case 2:x=pop();
+                               if(x==-1)
+                               {
+                                       printf("underflow");
+                               }
+                               else
+                               {
+                                       printf("ele deleted=%d",x);
+                               }
+                               break;
+                        case 3:x=peek();
+                               printf("the top ele=%d",x);
+                               break;
+                        case 4:display();
+                               break;
+                        case 5:exit(0);
+                               break;
+                }
+        }
+}
+
+enter choice1
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
+enter x value5
+enter choice1
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
+enter x value6
+enter choice1
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
+enter x value7
+enter choice2
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
+ele deleted=7enter choice3
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
+the top ele=6enter choice4
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
+|6|->|5|->NULLenter choice5
+1:push
+ 2:pop
+ 3:peek
+ 4:display
+ 5:exit
