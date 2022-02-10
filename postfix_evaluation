@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<ctype.h>
+#define MAX 50
+int a[MAX],top=-1,op2,op1,result;
+int operation(int,int,char);
+void push(int);
+int pop();
+void main()
+{
+        char postfix[MAX],ch;
+        int i=0;
+        printf("enter posfix expression");
+        scanf("%s",postfix);
+        while(postfix[i]!='\0')
+        {
+                ch=postfix[i];
+                if(isdigit(ch))
+                {
+                        push(ch-'0');
+                }
+                else
+                {
+                        op2=pop();
+                        op1=pop();
+                        result=operation(op1,op2,ch);
+                        push(result);
+                }
+                i++;
+        }
+        printf("the value of expression is %d",a[top]);
+}
+int operation(int op1,int op2,char ch)
+{
+    switch(ch)
+    {
+        case '^':return op1^op2;
+        case '%':return op1%op2;
+        case '/':return op1/op2;
+        case '*':return op1*op2;
+        case '+':return op1+op2;
+        case '-':return op1-op2;
+    }
+}
+void push(int ch)
+{
+    a[++top]=ch;
+}
+int pop()
+{
+    return a[top--];
+}
+
+output:
+enter posfix expression
+6523+8*+3+*
+the value of expression is 288
