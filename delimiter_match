@@ -1,0 +1,66 @@
+#include<stdio.h>
+#define MAX 50
+char a[MAX],ch;
+int top=-1;
+void push(char ch)
+{
+    a[++top]=ch;
+}
+char pop()
+{
+    return a[top--];
+}
+void main()
+{
+    char exp[MAX],ch,x;
+    int i=0,flag=1;
+    printf("enter the expression");
+    scanf("%s",exp);
+    while(exp[i]!='\0')
+    {
+        ch=exp[i];
+        if(ch=='('||ch=='{'||ch=='[')
+        {
+            push(ch);
+        }
+        if(ch==')'||ch=='}'||ch==']')
+        {
+            if(top==-1)
+            {
+                flag=0;
+                break;
+            }
+            else
+            {
+                x=pop();
+                if((x=='('&&ch==')')||(x=='{'&&ch=='}')||(x=='['&&ch==']'))
+                {
+                    flag=1;
+                }
+                else
+                {
+                    flag=0;
+                    break;
+                }
+                
+            }
+        }
+        i++;
+    }
+    if(top!=-1)
+    {
+        flag=0;
+    }
+    if(flag==1)
+    {
+        printf("matched");
+    }
+    else
+    {
+        printf("not matched");
+    }
+}
+output:
+enter the expression
+{a+b}+c)
+not matched
